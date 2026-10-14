@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>テスト対策ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF3FA; --surface:#FFFFFF; --ink:#1B2744; --muted:#586480; --line:#C7D3E6; --rule:rgba(43,85,224,.08);
+  --accent:#2B55E0; --accent-ink:#FFFFFF; --mark:#FFE066; --ok:#17734A; --ng:#B3261E;
+  color-scheme: light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1626; --surface:#18223A; --ink:#E8EEFB; --muted:#9FABC7; --line:#2E3C5E; --rule:rgba(124,156,255,.07);
+    --accent:#7C9CFF; --accent-ink:#0F1626; --mark:rgba(255,214,64,.45); --ok:#5AD19A; --ng:#FF8A80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1626; --surface:#18223A; --ink:#E8EEFB; --muted:#9FABC7; --line:#2E3C5E; --rule:rgba(124,156,255,.07);
+  --accent:#7C9CFF; --accent-ink:#0F1626; --mark:rgba(255,214,64,.45); --ok:#5AD19A; --ng:#FF8A80;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0}
+body{
+  font-family:'Zen Maru Gothic','Hiragino Maru Gothic ProN','Hiragino Sans','Yu Gothic',Meiryo,sans-serif;
+  background-color:var(--bg);
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px);
+  color:var(--ink); line-height:1.7; font-size:16px;
+}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 48px}
+header{padding:22px 0 10px}
+h1{margin:0;font-size:1.75rem;font-weight:900;letter-spacing:.02em}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:8px 0;border-bottom:2px solid var(--line)}
+.tab{flex:0 0 auto;font:inherit;font-weight:700;border:2px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 14px;border-radius:999px;cursor:pointer}
+.tab.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+main{padding-top:16px}
+h2{font-size:1.25rem;margin:4px 0 12px}
+h3{font-size:1rem;margin:22px 0 8px}
+p{margin:8px 0}
+.add{display:grid;gap:10px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:14px;margin-bottom:18px}
+.field{display:grid;gap:4px;font-size:.9rem;color:var(--muted);font-weight:500}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+input[type=checkbox],input[type=radio]{width:auto}
+textarea{resize:vertical}
+.btn{font:inherit;font-weight:700;background:var(--accent);color:var(--accent-ink);border:2px solid var(--accent);border-radius:8px;padding:8px 18px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.ok{background:var(--surface);color:var(--ok);border-color:var(--ok)}
+.btn.ng{background:var(--surface);color:var(--ng);border-color:var(--ng)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.empty,.hint{color:var(--muted)}
+.item{display:flex;align-items:center;gap:14px;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+.item .info{flex:1;display:grid;min-width:0;overflow-wrap:anywhere}
+.sub{color:var(--muted);font-size:.9rem}
+.past{opacity:.7}
+.next{padding:18px 16px;border-color:var(--ink)}
+.days{display:flex;align-items:baseline;gap:4px;min-width:96px}
+.mark{background:linear-gradient(transparent 45%,var(--mark) 45%);color:var(--ink);font-weight:900;font-size:2rem;padding:0 4px;line-height:1.3}
+.next .mark{font-size:3.4rem}
+.mark.sm{font-size:.95rem}
+.del{font:inherit;font-size:.85rem;color:var(--muted);background:none;border:2px solid var(--line);border-radius:8px;padding:3px 10px;cursor:pointer;white-space:nowrap}
+.del.arm{color:var(--ng);border-color:var(--ng)}
+.progress{display:flex;align-items:center;gap:10px;margin:12px 0 4px}
+.bar{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.day{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:4px 14px 8px;margin:10px 0}
+.day.today{border-color:var(--ink)}
+.day h3{margin:8px 0 2px;display:flex;gap:8px;align-items:center}
+.todo{display:flex;gap:10px;align-items:center;padding:5px 0}
+.todo input{width:20px;height:20px;flex:none}
+.todo.done span{text-decoration:line-through;color:var(--muted)}
+.todo em{font-style:normal;color:var(--ng);font-size:.85rem;font-weight:700}
+.flash{width:100%;min-height:200px;display:grid;place-content:center;gap:8px;text-align:center;font:inherit;font-size:1.6rem;font-weight:700;background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:16px;padding:20px;cursor:pointer;overflow-wrap:anywhere}
+.flash.back{border-color:var(--accent)}
+.flash small{font-size:.8rem;color:var(--muted);font-weight:500}
+.q{font-size:1.2rem;font-weight:700}
+.opt{display:block;width:100%;text-align:left;font:inherit;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opt:disabled{cursor:default;color:var(--ink)}
+.opt.right{border-color:var(--ok)}
+.opt.wrong{border-color:var(--ng)}
+.fb{font-weight:700}
+.result{text-align:center;padding:24px 0}
+.big{font-size:2.2rem;font-weight:900;margin:0}
+.choice{display:flex;gap:8px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{font:inherit;display:inline-flex;gap:6px;align-items:center;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:2px 12px;cursor:pointer}
+.chip[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.sw{width:12px;height:12px;border-radius:50%;display:inline-block}
+svg.chart{width:100%;height:auto;display:block;background:var(--surface);border:2px solid var(--line);border-radius:12px}
+.grid{stroke:var(--line);stroke-width:1}
+.ax{fill:var(--muted);font-size:13px}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cw{text-align:center;font-size:.8rem;color:var(--muted)}
+.cd{font:inherit;display:flex;flex-direction:column;align-items:center;min-height:58px;min-width:0;padding:3px 0;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:8px;cursor:pointer;line-height:1.25}
+.cd .dn{font-weight:700}
+.cd .tg{font-size:.65rem;font-weight:700;background:var(--mark);color:var(--ink);padding:0 3px;border-radius:3px}
+.cd .tk{font-size:.7rem;color:var(--muted)}
+.cd.today{border-color:var(--ink)}
+.cd.sel{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.cd.sel .tk{color:var(--accent-ink)}
+.cd.sel .tg{background:var(--surface);color:var(--ink)}
+.btns{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+footer{color:var(--muted);font-size:.8rem;margin-top:32px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>テスト対策ノート</h1></header>
+  <nav class="nav" id="nav" role="tablist" aria-label="メニュー"></nav>
+  <main id="view"></main>
+  <footer>入力した内容は、このブラウザの中だけに保存されます。</footer>
+</div>
+
+<script>
+/* ---------- 保存 ---------- */
+const KEY = 'testNote.v1';
+let S = { exams: [], plans: {}, cards: [], quiz: [], scores: [] };
+try {
+  const raw = localStorage.getItem(KEY);
+  if (raw) S = Object.assign(S, JSON.parse(raw));
+} catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- 便利関数 ---------- */
+const uid = () => Math.random().toString(36).slice(2, 9);
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'class') el.className = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+    else if (v === true) el.setAttribute(k, '');
+    else if (v !== false && v != null) el.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) {
+    if (c == null || c === false) continue;
+    el.append(c.nodeType ? c : document.createTextNode(c));
+  }
+  return el;
+}
+function svgEl(tag, attrs, text) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  if (text != null) el.textContent = text;
+  return el;
+}
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parse = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const todayD = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const diff = (a, b) => Math.round((parse(a) - parse(b)) / 864e5);
+const fmt = s => { const d = parse(s); return `${d.getMonth() + 1}月${d.getDate()}日(${'日月火水木金土'[d.getDay()]})`; };
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+const field = (label, input) => h('label', { class: 'field' }, h('span', {}, label), input);
+const whenStr = x => fmt(x.date) + (x.period ? ` ${x.period}時間目` : '');
+function delBtn(fn, label) {
+  let timer;
+  const b = h('button', {
+    type: 'button', class: 'del', 'aria-label': label + 'を削除',
+    onclick: () => {
+      if (b.classList.contains('arm')) { clearTimeout(timer); fn(); return; }
+      b.classList.add('arm'); b.textContent = '本当に削除?';
+      timer = setTimeout(() => { b.classList.remove('arm'); b.textContent = '削除'; }, 3000);
+    }
+  }, '削除');
+  return b;
+}
+
+/* ---------- タブ ---------- */
+const tabs = [['count', 'カウントダウン'], ['plan', '勉強計画'], ['card', '暗記カード'], ['quiz', 'クイズ'], ['score', '点数記録']];
+let cur = 'count';
+const nav = document.getElementById('nav');
+const view = document.getElementById('view');
+function render() {
+  nav.replaceChildren(...tabs.map(([k, l]) => h('button', {
+    type: 'button', role: 'tab', 'aria-selected': String(k === cur), class: 'tab' + (k === cur ? ' on' : ''),
+    onclick: () => { cur = k; render(); }
+  }, l)));
+  const fn = { count: viewCount, plan: viewPlan, card: viewCard, quiz: viewQuiz, score: viewScore }[cur];
+  view.replaceChildren(fn());
+}
+
+/* ---------- 1. カウントダウン ---------- */
+let editExam = null;
+const editBtn = x => h('button', {
+  type: 'button', class: 'del', 'aria-label': x.name + 'を編集',
+  onclick: () => { editExam = x.id; render(); window.scrollTo({ top: 0 }); }
+}, '編集');
+let editCard = null, editQuiz = null, editScore = null;
+const editBtnFor = (setter, label) => h('button', {
+  type: 'button', class: 'del', 'aria-label': label + 'を編集',
+  onclick: () => { setter(); render(); window.scrollTo({ top: 0 }); }
+}, '編集');
+function viewCount() {
+  const name = h('input', { type: 'text', placeholder: '例: 数学 中間テスト', required: true, maxlength: '30' });
+  const date = h('input', { type: 'date', required: true });
+  const period = h('select', {}, h('option', { value: '' }, '指定なし'),
+    [1, 2, 3, 4, 5, 6].map(n => h('option', { value: String(n) }, `${n}時間目`)));
+  const editing = S.exams.find(x => x.id === editExam);
+  if (editing) { name.value = editing.name; date.value = editing.date; period.value = editing.period ? String(editing.period) : ''; }
+  const form = h('form', {
+    class: 'add',
+    onsubmit: e => {
+      e.preventDefault();
+      const n = name.value.trim();
+      if (!n || !date.value) return;
+      const pv = period.value ? Number(period.value) : null;
+      if (editing) { editing.name = n; editing.date = date.value; editing.period = pv; editExam = null; }
+      else S.exams.push({ id: uid(), name: n, date: date.value, period: pv });
+      S.exams.sort((a, b) => a.date.localeCompare(b.date) || (a.period || 99) - (b.period || 99));
+      save(); render();
+    }
+  }, field('科目・テスト名', name), field('テスト日', date), field('何時間目', period),
+    h('div', { class: 'row' },
+      h('button', { class: 'btn', type: 'submit' }, editing ? '保存' : '追加'),
+      editing ? h('button', { class: 'btn ghost', type: 'button', onclick: () => { editExam = null; render(); } }, 'キャンセル') : null));
+
+  const t = ymd(todayD());
+  const up = S.exams.filter(x => diff(x.date, t) >= 0).sort((a, b) => a.date.localeCompare(b.date));
+  const past = S.exams.filter(x => diff(x.date, t) < 0).sort((a, b) => b.date.localeCompare(a.date));
+  const sec = h('section', {}, h('h2', {}, 'テストまでの日数'), form);
+  if (!S.exams.length) sec.append(h('p', { class: 'empty' }, 'まだテストが入っていません。科目と日付を入れて追加してください。'));
+
+  const remove = x => () => { S.exams = S.exams.filter(y => y.id !== x.id); delete S.plans[x.id]; save(); render(); };
+  up.forEach((x, i) => {
+    const d = diff(x.date, t);
+    sec.append(h('div', { class: 'item' + (i === 0 ? ' next' : '') },
+      h('div', { class: 'days' },
+        d === 0 ? h('span', { class: 'mark' }, '今日')
+                : [h('small', {}, 'あと'), h('span', { class: 'mark' }, String(d)), h('small', {}, '日')]),
+      h('div', { class: 'info' }, h('strong', {}, x.name), h('span', { class: 'sub' }, whenStr(x))),
+      h('div', { class: 'btns' }, editBtn(x), delBtn(remove(x), x.name))));
+  });
+  if (past.length) {
+    sec.append(h('h3', {}, '終わったテスト'));
+    past.forEach(x => sec.append(h('div', { class: 'item past' },
+      h('div', { class: 'info' }, h('strong', {}, x.name), h('span', { class: 'sub' }, whenStr(x))),
+      h('div', { class: 'btns' }, editBtn(x), delBtn(remove(x), x.name)))));
+  }
+  return sec;
+}
+
+/* ---------- 2. 勉強計画 ---------- */
+let planExam = null;
+function viewPlan() {
+  const t = ymd(todayD());
+  const up = S.exams.filter(x => diff(x.date, t) >= 0).sort((a, b) => a.date.localeCompare(b.date));
+  const sec = h('section', {}, h('h2', {}, '勉強計画'));
+  if (!up.length) {
+    sec.append(h('p', { class: 'empty' }, '先に「カウントダウン」でテストを追加すると、ここで計画が作れます。'));
+    return sec;
+  }
+  sec.append(calendar(t));
+  sec.append(h('h3', {}, 'テストごとの計画'));
+  if (!up.find(x => x.id === planExam)) planExam = up[0].id;
+  const sel = h('select', { onchange: e => { planExam = e.target.value; render(); } },
+    up.map(x => h('option', { value: x.id, selected: x.id === planExam }, `${x.name}(${whenStr(x)})`)));
+  sec.append(field('テスト', sel));
+  const ex = up.find(x => x.id === planExam);
+  const plan = S.plans[ex.id];
+
+  if (!plan) {
+    const ta = h('textarea', { rows: '6', placeholder: '例:\nワーク p.10〜20\n教科書の用語まとめ\n過去問を解く' });
+    sec.append(
+      h('div', { style: 'height:10px' }),
+      field('やること(1行に1つ)', ta),
+      h('p', { class: 'hint' }, '今日からテスト前日までの日数に、均等に割り振ります。'),
+      h('button', {
+        class: 'btn', type: 'button',
+        onclick: () => {
+          const items = ta.value.split('\n').map(s => s.trim()).filter(Boolean);
+          if (!items.length) return;
+          const days = Math.max(1, diff(ex.date, t));
+          S.plans[ex.id] = items.map((text, i) => ({
+            id: uid(), text, done: false,
+            date: ymd(addDays(todayD(), Math.floor(i * days / items.length)))
+          }));
+          save(); render();
+        }
+      }, '計画をつくる'));
+    return sec;
+  }
+
+  const done = plan.filter(p => p.done).length;
+  const fill = h('i');
+  fill.style.width = Math.round(done / plan.length * 100) + '%';
+  sec.append(h('div', { class: 'progress' }, h('div', { class: 'bar' }, fill), h('span', {}, `${done} / ${plan.length} 完了`)));
+  [...new Set(plan.map(p => p.date))].sort().forEach(d => {
+    const g = h('div', { class: 'day' + (d === t ? ' today' : '') },
+      h('h3', {}, fmt(d), d === t ? h('span', { class: 'mark sm' }, '今日') : null));
+    plan.filter(p => p.date === d).forEach(p => {
+      const late = !p.done && d < t;
+      g.append(h('label', { class: 'todo' + (p.done ? ' done' : '') },
+        h('input', { type: 'checkbox', checked: p.done, onchange: e => { p.done = e.target.checked; save(); render(); } }),
+        h('span', {}, p.text), late ? h('em', {}, '遅れ') : null));
+    });
+    sec.append(g);
+  });
+  sec.append(h('div', { class: 'row' }, h('button', {
+    class: 'btn ghost', type: 'button',
+    onclick: () => { delete S.plans[ex.id]; save(); render(); }
+  }, '計画を作り直す')));
+  return sec;
+}
+
+/* ---------- 勉強計画のカレンダー ---------- */
+let cal = null, calSel = null;
+function calendar(t) {
+  const td = todayD();
+  if (!cal) cal = { y: td.getFullYear(), m: td.getMonth() };
+  if (!calSel) calSel = t;
+  const items = Object.entries(S.plans).flatMap(([id, arr]) => arr.map(p => ({ p, ex: S.exams.find(e => e.id === id) })));
+  const shift = n => { const d = new Date(cal.y, cal.m + n, 1); cal = { y: d.getFullYear(), m: d.getMonth() }; render(); };
+  const wrap = h('div', {});
+  wrap.append(h('div', { class: 'calhead' },
+    h('button', { type: 'button', class: 'del', onclick: () => shift(-1) }, '前の月'),
+    h('strong', {}, `${cal.y}年${cal.m + 1}月`),
+    h('button', { type: 'button', class: 'del', onclick: () => shift(1) }, '次の月')));
+  const grid = h('div', { class: 'cal' });
+  '日月火水木金土'.split('').forEach(w => grid.append(h('div', { class: 'cw' }, w)));
+  const first = new Date(cal.y, cal.m, 1);
+  for (let i = 0; i < first.getDay(); i++) grid.append(h('div', {}));
+  const last = new Date(cal.y, cal.m + 1, 0).getDate();
+  for (let d = 1; d <= last; d++) {
+    const ds = `${cal.y}-${pad(cal.m + 1)}-${pad(d)}`;
+    const tk = items.filter(i => i.p.date === ds);
+    const exs = S.exams.filter(x => x.date === ds);
+    const dn = tk.filter(i => i.p.done).length;
+    grid.append(h('button', {
+      type: 'button', class: 'cd' + (ds === t ? ' today' : '') + (ds === calSel ? ' sel' : ''),
+      'aria-pressed': String(ds === calSel),
+      'aria-label': `${cal.m + 1}月${d}日` + (exs.length ? ' テストあり' : '') + (tk.length ? ` やること${tk.length}件中${dn}件完了` : ''),
+      onclick: () => { calSel = ds; render(); }
+    }, h('span', { class: 'dn' }, String(d)),
+      exs.length ? h('span', { class: 'tg' }, 'テスト') : null,
+      tk.length ? h('span', { class: 'tk' }, `${dn}/${tk.length}`) : null));
+  }
+  wrap.append(grid, h('p', { class: 'hint' }, '日付の下の「2/3」は、完了数/やること数です。日付を押すと中身が見られます。'));
+  const dt = items.filter(i => i.p.date === calSel);
+  const de = S.exams.filter(x => x.date === calSel);
+  const box = h('div', { class: 'day' + (calSel === t ? ' today' : '') },
+    h('h3', {}, fmt(calSel), calSel === t ? h('span', { class: 'mark sm' }, '今日') : null));
+  de.forEach(x => box.append(h('p', {}, h('strong', {}, `テスト: ${x.name}`), x.period ? ` ${x.period}時間目` : '')));
+  if (!dt.length && !de.length) box.append(h('p', { class: 'hint' }, 'この日の予定はありません。'));
+  dt.forEach(({ p, ex }) => box.append(h('label', { class: 'todo' + (p.done ? ' done' : '') },
+    h('input', { type: 'checkbox', checked: p.done, onchange: e => { p.done = e.target.checked; save(); render(); } }),
+    h('span', {}, p.text), ex ? h('span', { class: 'sub' }, `(${ex.name})`) : null)));
+  wrap.append(box);
+  return wrap;
+}
+
+/* ---------- 3. 暗記カード ---------- */
+let sess = null;
+function startCards(cards) { sess = { queue: shuffle(cards.map(c => c.id)), total: cards.length, flipped: false }; render(); }
+function viewCard() {
+  const sec = h('section', {}, h('h2', {}, '暗記カード'));
+  if (sess) return studyCard(sec);
+  const known = S.cards.filter(c => c.known).length;
+  sec.append(h('p', { class: 'hint' }, S.cards.length ? `${S.cards.length}枚中、${known}枚を覚えた状態です。` : 'カードを追加すると練習できます。'));
+  if (S.cards.length) {
+    sec.append(h('div', { class: 'row' },
+      h('button', { class: 'btn', type: 'button', onclick: () => startCards(S.cards) }, '全部で練習'),
+      S.cards.length > known ? h('button', { class: 'btn ghost', type: 'button', onclick: () => startCards(S.cards.filter(c => !c.known)) }, 'まだのカードだけ') : null));
+  }
+  const term = h('input', { type: 'text', required: true, maxlength: '80', placeholder: '例: 光合成' });
+  const meaning = h('input', { type: 'text', required: true, maxlength: '200', placeholder: '例: 光エネルギーでデンプンをつくるはたらき' });
+  const editingC = S.cards.find(x => x.id === editCard);
+  if (editingC) { term.value = editingC.term; meaning.value = editingC.meaning; }
+  sec.append(h('form', {
+    class: 'add',
+    onsubmit: e => {
+      e.preventDefault();
+      const a = term.value.trim(), b = meaning.value.trim();
+      if (!a || !b) return;
+      if (editingC) { editingC.term = a; editingC.meaning = b; editCard = null; }
+      else S.cards.push({ id: uid(), term: a, meaning: b, known: false });
+      save(); render();
+    }
+  }, field('用語(おもて)', term), field('意味(うら)', meaning),
+    h('div', { class: 'row' },
+      h('button', { class: 'btn', type: 'submit' }, editingC ? '保存' : 'カードを追加'),
+      editingC ? h('button', { class: 'btn ghost', type: 'button', onclick: () => { editCard = null; render(); } }, 'キャンセル') : null)));
+  S.cards.forEach(c => sec.append(h('div', { class: 'item' },
+    h('div', { class: 'info' }, h('strong', {}, c.term), h('span', { class: 'sub' }, c.meaning + (c.known ? '(覚えた)' : ''))),
+    h('div', { class: 'btns' }, editBtnFor(() => { editCard = c.id; }, c.term),
+      delBtn(() => { S.cards = S.cards.filter(x => x.id !== c.id); save(); render(); }, c.term)))));
+  return sec;
+}
+function studyCard(sec) {
+  if (!sess.queue.length) {
+    sec.append(h('div', { class: 'result' },
+      h('p', { class: 'big' }, '全部覚えました'), h('p', {}, `${sess.total}枚 完了`),
+      h('button', { class: 'btn', type: 'button', onclick: () => { sess = null; render(); } }, 'もどる')));
+    return sec;
+  }
+  const c = S.cards.find(x => x.id === sess.queue[0]);
+  if (!c) { sess.queue.shift(); return studyCard(sec); }
+  sec.append(h('p', { class: 'hint' }, `残り ${sess.queue.length}枚`));
+  sec.append(h('button', {
+    type: 'button', class: 'flash' + (sess.flipped ? ' back' : ''),
+    onclick: () => { sess.flipped = !sess.flipped; render(); }
+  }, h('small', {}, sess.flipped ? '意味' : '用語'), h('span', {}, sess.flipped ? c.meaning : c.term)));
+  if (sess.flipped) {
+    sec.append(h('div', { class: 'row' },
+      h('button', { class: 'btn ok', type: 'button', onclick: () => { c.known = true; sess.queue.shift(); sess.flipped = false; save(); render(); } }, '覚えた'),
+      h('button', { class: 'btn ng', type: 'button', onclick: () => { c.known = false; sess.queue.push(sess.queue.shift()); sess.flipped = false; save(); render(); } }, 'まだ')));
+  } else {
+    sec.append(h('p', { class: 'hint' }, 'カードを押すと意味が出ます。'));
+  }
+  sec.append(h('div', { class: 'row' }, h('button', { class: 'btn ghost', type: 'button', onclick: () => { sess = null; render(); } }, '練習をやめる')));
+  return sec;
+}
+
+/* ---------- 4. クイズ ---------- */
+let qs = null;
+function setOpts() {
+  const q = S.quiz.find(x => x.id === qs.order[qs.i]);
+  qs.opts = q ? shuffle(q.choices.map((t, i) => ({ t, i }))) : [];
+  qs.picked = null;
+}
+function startQuiz() { qs = { order: shuffle(S.quiz.map(q => q.id)), i: 0, score: 0 }; setOpts(); render(); }
+function viewQuiz() {
+  const sec = h('section', {}, h('h2', {}, 'ミニクイズ'));
+  if (qs) return playQuiz(sec);
+  if (S.quiz.length) {
+    sec.append(h('p', { class: 'hint' }, `${S.quiz.length}問あります。`),
+      h('div', { class: 'row' }, h('button', { class: 'btn', type: 'button', onclick: startQuiz }, 'クイズを始める')));
+  } else {
+    sec.append(h('p', { class: 'hint' }, '問題を追加すると、ここでクイズができます。'));
+  }
+  const q = h('input', { type: 'text', required: true, maxlength: '200', placeholder: '問題文' });
+  const radios = [0, 1, 2, 3].map(i => h('input', { type: 'radio', name: 'ans', value: String(i), checked: i === 0, 'aria-label': `選択肢${i + 1}を正解にする` }));
+  const inputs = [0, 1, 2, 3].map(i => h('input', { type: 'text', required: true, maxlength: '100', placeholder: `選択肢${i + 1}` }));
+  const editingQ = S.quiz.find(x => x.id === editQuiz);
+  if (editingQ) {
+    q.value = editingQ.q;
+    inputs.forEach((inp, i) => { inp.value = editingQ.choices[i]; });
+    radios.forEach((r, i) => { r.checked = i === editingQ.answer; });
+  }
+  sec.append(h('form', {
+    class: 'add',
+    onsubmit: e => {
+      e.preventDefault();
+      const text = q.value.trim(), choices = inputs.map(x => x.value.trim());
+      if (!text || choices.some(c => !c)) return;
+      const ans = radios.findIndex(r => r.checked);
+      if (editingQ) { editingQ.q = text; editingQ.choices = choices; editingQ.answer = ans; editQuiz = null; }
+      else S.quiz.push({ id: uid(), q: text, choices, answer: ans });
+      save(); render();
+    }
+  }, field('問題', q),
+    h('p', { class: 'hint' }, '正解の選択肢の左の丸を選んでください。'),
+    inputs.map((inp, i) => h('div', { class: 'choice' }, radios[i], inp)),
+    h('div', { class: 'row' },
+      h('button', { class: 'btn', type: 'submit' }, editingQ ? '保存' : '問題を追加'),
+      editingQ ? h('button', { class: 'btn ghost', type: 'button', onclick: () => { editQuiz = null; render(); } }, 'キャンセル') : null)));
+  S.quiz.forEach(x => sec.append(h('div', { class: 'item' },
+    h('div', { class: 'info' }, h('strong', {}, x.q), h('span', { class: 'sub' }, '答え: ' + x.choices[x.answer])),
+    h('div', { class: 'btns' }, editBtnFor(() => { editQuiz = x.id; }, '問題'),
+      delBtn(() => { S.quiz = S.quiz.filter(y => y.id !== x.id); save(); render(); }, '問題')))));
+  return sec;
+}
+function playQuiz(sec) {
+  if (qs.i >= qs.order.length) {
+    sec.append(h('div', { class: 'result' },
+      h('p', { class: 'big' }, `${qs.score} / ${qs.order.length}`),
+      h('p', {}, qs.score === qs.order.length ? '全問正解です' : '正解した問題の数'),
+      h('div', { class: 'row', style: 'justify-content:center' },
+        h('button', { class: 'btn', type: 'button', onclick: startQuiz }, 'もう一度'),
+        h('button', { class: 'btn ghost', type: 'button', onclick: () => { qs = null; render(); } }, 'もどる'))));
+    return sec;
+  }
+  const q = S.quiz.find(x => x.id === qs.order[qs.i]);
+  if (!q) { qs.i++; setOpts(); return playQuiz(sec); }
+  sec.append(h('p', { class: 'hint' }, `${qs.i + 1} / ${qs.order.length}問`), h('p', { class: 'q' }, q.q));
+  const answered = qs.picked != null;
+  qs.opts.forEach(o => {
+    const right = answered && o.i === q.answer, wrong = answered && o.i === qs.picked && o.i !== q.answer;
+    sec.append(h('button', {
+      type: 'button', class: 'opt' + (right ? ' right' : '') + (wrong ? ' wrong' : ''), disabled: answered,
+      onclick: () => { qs.picked = o.i; if (o.i === q.answer) qs.score++; render(); }
+    }, (right ? '○ ' : wrong ? '× ' : '') + o.t));
+  });
+  if (answered) {
+    sec.append(
+      h('p', { class: 'fb' }, qs.picked === q.answer ? '正解です' : `不正解。正解は「${q.choices[q.answer]}」`),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn', type: 'button', onclick: () => { qs.i++; setOpts(); render(); } }, qs.i + 1 < qs.order.length ? '次の問題' : '結果を見る')));
+  }
+  sec.append(h('div', { class: 'row' }, h('button', { class: 'btn ghost', type: 'button', onclick: () => { qs = null; render(); } }, 'やめる')));
+  return sec;
+}
+
+/* ---------- 5. 点数記録 ---------- */
+const COLORS = ['#2B55E0', '#E0662B', '#1E9E6A', '#B33DC7', '#D4A017', '#D6336C'];
+const hidden = new Set();
+const pct = x => Math.round(x.score / x.full * 1000) / 10;
+function viewScore() {
+  const sec = h('section', {}, h('h2', {}, '点数記録'));
+  const subs = [...new Set(S.scores.map(x => x.subject))];
+  const subject = h('input', { type: 'text', required: true, maxlength: '30', list: 'subjlist', placeholder: '例: 英語' });
+  const dl = h('datalist', { id: 'subjlist' }, subs.map(s => h('option', { value: s })));
+  const label = h('input', { type: 'text', maxlength: '30', placeholder: '例: 中間テスト' });
+  const score = h('input', { type: 'number', required: true, min: '0', step: 'any', inputmode: 'decimal' });
+  const full = h('input', { type: 'number', required: true, min: '1', step: 'any', value: '100', inputmode: 'decimal' });
+  const date = h('input', { type: 'date', required: true, value: ymd(todayD()) });
+  const editingS = S.scores.find(x => x.id === editScore);
+  if (editingS) {
+    subject.value = editingS.subject; label.value = editingS.label || '';
+    score.value = String(editingS.score); full.value = String(editingS.full); date.value = editingS.date;
+  }
+  sec.append(h('form', {
+    class: 'add',
+    onsubmit: e => {
+      e.preventDefault();
+      const s = subject.value.trim(), sc = parseFloat(score.value), fu = parseFloat(full.value);
+      if (!s || isNaN(sc) || isNaN(fu) || fu <= 0 || !date.value) return;
+      const rec = { subject: s, label: label.value.trim(), score: sc, full: fu, date: date.value };
+      if (editingS) { Object.assign(editingS, rec); editScore = null; }
+      else S.scores.push(Object.assign({ id: uid() }, rec));
+      save(); render();
+    }
+  }, field('科目', subject), dl, field('テスト名(なくてもOK)', label),
+    field('点数', score), field('満点', full), field('日付', date),
+    h('div', { class: 'row' },
+      h('button', { class: 'btn', type: 'submit' }, editingS ? '保存' : '記録する'),
+      editingS ? h('button', { class: 'btn ghost', type: 'button', onclick: () => { editScore = null; render(); } }, 'キャンセル') : null)));
+
+  if (!S.scores.length) {
+    sec.append(h('p', { class: 'empty' }, 'まだ記録がありません。点数を入れると、科目ごとの推移がグラフで見られます。'));
+    return sec;
+  }
+  sec.append(h('h3', {}, '得点率の推移'));
+  sec.append(h('div', { class: 'chips' }, subs.map((s, i) => {
+    const sw = h('span', { class: 'sw' });
+    sw.style.background = COLORS[i % COLORS.length];
+    return h('button', {
+      type: 'button', class: 'chip', 'aria-pressed': String(!hidden.has(s)),
+      onclick: () => { hidden.has(s) ? hidden.delete(s) : hidden.add(s); render(); }
+    }, sw, s);
+  })));
+  sec.append(chart(subs));
+  sec.append(h('h3', {}, '記録の一覧'));
+  S.scores.slice().sort((a, b) => b.date.localeCompare(a.date)).forEach(x => sec.append(h('div', { class: 'item' },
+    h('div', { class: 'info' },
+      h('strong', {}, x.subject + (x.label ? ` ・ ${x.label}` : '')),
+      h('span', { class: 'sub' }, `100点換算 ${pct(x)}点(${x.score} / ${x.full}点) ${fmt(x.date)}`)),
+    h('div', { class: 'btns' }, editBtnFor(() => { editScore = x.id; }, '記録'),
+      delBtn(() => { S.scores = S.scores.filter(y => y.id !== x.id); save(); render(); }, '記録')))));
+  return sec;
+}
+function chart(subs) {
+  const W = 520, H = 280, L = 44, R = 16, T = 14, B = 34;
+  const svg = svgEl('svg', { class: 'chart', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': '科目ごとの得点率の推移グラフ' });
+  const Y = p => T + (H - T - B) * (1 - Math.min(100, Math.max(0, p)) / 100);
+  [0, 25, 50, 75, 100].forEach(v => {
+    svg.append(svgEl('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'grid' }),
+      svgEl('text', { x: L - 6, y: Y(v) + 4, class: 'ax', 'text-anchor': 'end' }, v + '%'));
+  });
+  const dates = [...new Set(S.scores.map(x => x.date))].sort();
+  const t0 = parse(dates[0]).getTime(), t1 = parse(dates[dates.length - 1]).getTime();
+  const X = d => t1 === t0 ? (L + W - R) / 2 : L + (W - L - R) * (parse(d).getTime() - t0) / (t1 - t0);
+  dates.forEach((d, i) => {
+    if (dates.length <= 5 || i === 0 || i === dates.length - 1) {
+      const dd = parse(d);
+      svg.append(svgEl('text', { x: X(d), y: H - 10, class: 'ax', 'text-anchor': 'middle' }, `${dd.getMonth() + 1}/${dd.getDate()}`));
+    }
+  });
+  subs.forEach((s, i) => {
+    if (hidden.has(s)) return;
+    const col = COLORS[i % COLORS.length];
+    const pts = S.scores.filter(x => x.subject === s).sort((a, b) => a.date.localeCompare(b.date));
+    if (pts.length > 1) svg.append(svgEl('polyline', { points: pts.map(p => `${X(p.date)},${Y(pct(p))}`).join(' '), fill: 'none', stroke: col, 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+    pts.forEach(p => {
+      const c = svgEl('circle', { cx: X(p.date), cy: Y(pct(p)), r: 5, fill: col });
+      c.append(svgEl('title', {}, `${s} ${fmt(p.date)} ${pct(p)}%`));
+      svg.append(c);
+    });
+  });
+  return svg;
+}
+
+render();
+</script>
+</body>
+</html>
